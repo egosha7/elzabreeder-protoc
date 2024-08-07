@@ -1,0 +1,322 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "elzabreeder.api.v1;apiv1";
+
+import "google/protobuf/empty.proto";
+
+// Сервис для работы с пользователями
+service UserService {
+    rpc SaveUser (SaveUserRequest) returns (SaveUserResponse);
+    rpc GetByUsername (GetByUsernameRequest) returns (GetByUsernameResponse);
+    rpc CheckUniqUser (CheckUniqUserRequest) returns (CheckUniqUserResponse);
+    rpc CheckValidUser (CheckValidUserRequest) returns (CheckValidUserResponse);
+}
+
+// Сервис для работы с email
+service EmailService {
+    rpc AddEmail (AddEmailRequest) returns (AddEmailResponse);
+}
+
+// Сервис для работы с щенками
+service PuppyService {
+    rpc PuppiesGet (PuppiesGetRequest) returns (PuppiesGetResponse);
+    rpc PuppyGet (PuppyRequest) returns (PuppyResponse);
+    rpc PuppyUpdate (PuppyUpdateRequest) returns (PuppyUpdateResponse);
+    rpc PuppyAdd (PuppyAddRequest) returns (PuppyAddResponse);
+    rpc PuppyDelete (PuppyDeleteRequest) returns (PuppyDeleteResponse);
+    rpc PuppyChangeArchived (PuppyChangeArchivedRequest) returns (PuppyChangeArchivedResponse);
+}
+
+// Сервис для работы с собаками
+service DogService {
+    rpc DogGet (DogRequest) returns (DogResponse);
+    rpc DogsGet (DogsGetRequest) returns (DogsGetResponse);
+    rpc DogChangeArchived (DogChangeArchivedRequest) returns (DogChangeArchivedResponse);
+    rpc DogAdd (DogAddRequest) returns (DogAddResponse);
+    rpc DogUpdate (DogUpdateRequest) returns (DogUpdateResponse);
+}
+
+// Сервис для работы с отзывами
+service FeedbackService {
+    rpc PuppiesWithReviewsGet (google.protobuf.Empty) returns (PuppiesWithReviewsGetResponse);
+    rpc ReviewsGet (ReviewsGetRequest) returns (ReviewsGetResponse);
+    rpc GetReviews (GetReviewsRequest) returns (GetReviewsResponse);
+    rpc FeedbackGet (FeedbackRequest) returns (FeedbackResponse);
+    rpc FeedbackAdd (FeedbackAddRequest) returns (FeedbackAddResponse);
+    rpc FeedbackUpdate (FeedbackUpdateRequest) returns (FeedbackUpdateResponse);
+    rpc FeedbackDelete (FeedbackDeleteRequest) returns (FeedbackDeleteResponse);
+    rpc FeedbackChangeChecked (FeedbackChangeCheckedRequest) returns (FeedbackChangeCheckedResponse);
+}
+
+// Определение сообщений
+message User {
+    string login = 1;
+    string hash = 2;
+}
+
+message SaveUserRequest {
+    User user = 1;
+}
+
+message SaveUserResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message GetByUsernameRequest {
+    string username = 1;
+}
+
+message GetByUsernameResponse {
+    User user = 1;
+    string error_message = 2;
+}
+
+message CheckUniqUserRequest {
+    string login = 1;
+}
+
+message CheckUniqUserResponse {
+    bool unique = 1;
+    string error_message = 2;
+}
+
+message CheckValidUserRequest {
+    string login = 1;
+}
+
+message CheckValidUserResponse {
+    int32 id = 1;
+    string hash = 2;
+    string error_message = 3;
+}
+
+message AddEmailRequest {
+    string email = 1;
+}
+
+message AddEmailResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message Puppy {
+    int32 id = 1;
+    string name = 2;
+    string title = 3;
+    string sex = 4;
+    string price = 5;
+    bool ready_out = 6;
+    bool archived = 7;
+    string city = 8;
+    int32 mother_id = 9;
+    int32 father_id = 10;
+    string date_birth = 11;
+    string color = 12;
+    repeated string urls = 13;
+}
+
+message PuppyRequest {
+    string id_puppy = 1;
+}
+
+message PuppiesGetRequest {
+    repeated string chocolates = 1;
+    repeated string genders = 2;
+    string id_puppy = 3;
+    string ready_to_move = 4;
+    int32 page = 5;
+    bool archived = 6;
+}
+
+message PuppiesGetResponse {
+    repeated Puppy puppies = 1;
+    string error_message = 2;
+}
+
+message PuppyResponse {
+    Puppy puppy = 1;
+    string error_message = 2;
+}
+
+message PuppyUpdateRequest {
+    Puppy puppy = 1;
+}
+
+message PuppyUpdateResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message PuppyAddRequest {
+    Puppy puppy = 1;
+}
+
+message PuppyAddResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message PuppyDeleteRequest {
+    string id_puppy = 1;
+}
+
+message PuppyDeleteResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message PuppyChangeArchivedRequest {
+    string id_puppy = 1;
+    bool archived = 2;
+    string city = 3;
+    string phone = 4;
+}
+
+message PuppyChangeArchivedResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message Dog {
+    int32 id = 1;
+    string name = 2;
+    string title = 3;
+    string gender = 4;
+    string color = 5;
+    bool archived = 6;
+    repeated string urls = 7;
+}
+
+message DogRequest {
+    string id_dog = 1;
+}
+
+message DogResponse {
+    Dog dog = 1;
+    string error_message = 2;
+}
+
+message DogsGetRequest {
+    repeated string chocolates = 1;
+    repeated string genders = 2;
+    string id = 3;
+    bool archived = 4;
+}
+
+message DogsGetResponse {
+    repeated Dog dogs = 1;
+    string error_message = 2;
+}
+
+message DogChangeArchivedRequest {
+    string id_dog = 1;
+    bool archived = 2;
+}
+
+message DogChangeArchivedResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message DogAddRequest {
+    Dog dog = 1;
+}
+
+message DogAddResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message DogUpdateRequest {
+    Dog dog = 1;
+}
+
+message DogUpdateResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message Feedback {
+    int32 id = 1;
+    int32 puppy_id = 2;
+    string name = 3;
+    string number = 4;
+    string title = 5;
+    bool verified = 6;
+    string date = 7;
+    repeated string urls = 8;
+}
+
+message ReviewsGetRequest {
+    string id_review = 1;
+    bool checked = 2;
+}
+
+message ReviewsGetResponse {
+    repeated Feedback feedbacks = 1;
+    string error_message = 2;
+}
+
+message GetReviewsRequest {
+    repeated Puppy puppies = 1;
+}
+
+message GetReviewsResponse {
+    map<int32, string> reviews = 1;
+    string error_message = 2;
+}
+
+message FeedbackRequest {
+    string id_puppy = 1;
+    string verified = 2;
+}
+
+message FeedbackResponse {
+    Feedback feedback = 1;
+    string error_message = 2;
+}
+
+message FeedbackAddRequest {
+    Feedback feedback = 1;
+}
+
+message FeedbackAddResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message FeedbackUpdateRequest {
+    Feedback feedback = 1;
+}
+
+message FeedbackUpdateResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message FeedbackDeleteRequest {
+    string id_feedback = 1;
+}
+
+message FeedbackDeleteResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message FeedbackChangeCheckedRequest {
+    string id_feedback = 1;
+    bool checked = 2;
+}
+
+message FeedbackChangeCheckedResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message PuppiesWithReviewsGetResponse {
+    map<int32, int32> puppy_reviews = 1;
+    string error_message = 2;
+}
