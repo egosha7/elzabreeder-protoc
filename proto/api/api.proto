@@ -51,6 +51,7 @@ service FeedbackService {
 }
 
 // Определение сообщений
+
 message User {
     string login = 1;
     string hash = 2;
