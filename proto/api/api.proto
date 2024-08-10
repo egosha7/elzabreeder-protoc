@@ -143,7 +143,7 @@ message PuppyResponse {
 }
 
 message PuppyUpdateRequest {
-    string id_puppy = 1;
+    Puppy puppy = 1;
 }
 
 message PuppyUpdateResponse {
