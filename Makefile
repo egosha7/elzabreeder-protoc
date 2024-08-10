@@ -1,7 +1,7 @@
 .PHONY: protoc push
 
 # Устанавливаем переменные
-TAG = v0.0.4
+TAG = v0.0.5
 
 # Цель для запуска генерации proto
 protoc:

@@ -51,6 +51,10 @@ service FeedbackService {
 }
 
 // Определение сообщений
+message FileUpload {
+    bytes file_content = 1;
+    string file_name = 2;
+}
 
 message User {
     string login = 1;
@@ -144,6 +148,7 @@ message PuppyResponse {
 
 message PuppyUpdateRequest {
     Puppy puppy = 1;
+    repeated FileUpload files = 2;  // Для передачи нескольких файлов
 }
 
 message PuppyUpdateResponse {
